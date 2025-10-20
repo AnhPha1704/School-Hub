@@ -1,0 +1,4 @@
+gray #f7f7f7
+#cfcefe
+#fae27a
+#13876d
