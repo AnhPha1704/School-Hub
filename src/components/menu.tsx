@@ -30,6 +30,12 @@ const menuItems = [
         visible: ["admin", "teacher"],
       },
       {
+        icon: "/attendance.png",
+        label: "Điểm danh",
+        href: "/classes",
+        visible: ["admin", "teacher"],
+      },
+      {
         icon: "/assignment.png",
         label: "Bài tập",
         href: "/assignments",
