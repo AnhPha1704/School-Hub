@@ -1,5 +1,0 @@
-gray #f7f7f7
-#cfcefe
-#FAE27C
-#C3EBFA
-#13876d

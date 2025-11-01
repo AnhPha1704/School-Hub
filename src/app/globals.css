@@ -1,5 +1,19 @@
 @import "tailwindcss";
 
+@media screen and (max-width: 1000px) {
+  .rbc-day-slot .rbc-event-label {
+    display: none !important;
+  }
+}
+
+:root {
+  --color-boyC: #badfdb;
+  --color-girlC: #ffbdbd;
+  --color-pink: #ffa4a4;
+  --color-yellow: #fcf9ea;
+}
+
+/* adminCalendar */
 .react-calendar {
   width: 100% !important;
   border: none !important;
@@ -9,9 +23,118 @@
   border-radius: 1rem !important;
 }
 .react-calendar__tile--active {
-  background-color: #c3ebfa !important;
-  color: black;
+  background-color: var(--color-boyC) !important;
+}
+.react-calendar__tile--now {
+  background-color: var(--color-girlC) !important;
 }
 .react-calendar__navigation__label__labelText {
   font-weight: 600;
+}
+
+/* StudentCalendar */
+@media screen and (max-width: 1000px) {
+  .rbc-day-slot .rbc-event-label {
+    display: none !important;
+  }
+  .rbc-time-view {
+    width: 100% !important;
+    min-width: unset !important;
+    overflow-x: auto !important;
+  }
+  .rbc-time-header,
+  .rbc-time-content {
+    min-width: 650px !important;
+  }
+}
+.rbc-btn-group:first-child {
+  display: none !important;
+}
+.rbc-btn-group:last-child {
+  font-size: 13px !important;
+}
+.rbc-btn-group:last-child button {
+  border: none !important;
+  background-color: #dcefed !important;
+  margin-left: 2px !important;
+}
+.rbc-toolbar button.rbc-active {
+  background-color: #badfdb !important;
+  box-shadow: none !important;
+}
+.rbc-toolbar-label {
+  text-align: right !important;
+  padding: 0px 30px !important;
+}
+.rbc-time-view {
+  border-color: #eee !important;
+}
+.rbc-allday-cell {
+  display: none !important;
+}
+.rbc-time-view .rbc-time-gutter {
+  font-size: 12px !important;
+}
+.rbc-time-view .rbc-time-gutter .rbc-timeslot-group {
+  padding: 0px 10px !important;
+}
+.rbc-label .rbc-time-header-gutter {
+  padding: 0px 10px !important;
+}
+.rbc-time-header {
+  background-color: #dcefed !important;
+}
+.rbc-time-content {
+  background-color: #eef7f6 !important;
+}
+.rbc-header.rbc-today {
+  background-color: #a8d7d2 !important;
+}
+.rbc-day-slot.rbc-time-column.rbc-now.rbc-today {
+  background-color: #eef7f6 !important;
+}
+.rbc-current-time-indicator {
+  background-color: #a8d7d2 !important;
+}
+.rcb-day-slot {
+  font-size: 14px !important;
+}
+.rbc-event {
+  border: none !important;
+  color: black !important;
+  padding: 10px !important;
+  margin: 10px !important;
+  width: 99% !important;
+}
+.rbc-event {
+  margin: 6px !important;
+}
+.rbc-event:nth-child(1) {
+  background-color: #e2f8ff !important;
+}
+.rbc-event:nth-child(2) {
+  background-color: #fefce8 !important;
+}
+.rbc-event:nth-child(3) {
+  background-color: #f2f1ff !important;
+}
+.rbc-event:nth-child(4) {
+  background-color: #fdf2fb !important;
+}
+.rbc-event:nth-child(5) {
+  background-color: #e2f8ff !important;
+}
+.rbc-event:nth-child(6) {
+  background-color: #fefce8 !important;
+}
+.rbc-event:nth-child(7) {
+  background-color: #f2f1ff !important;
+}
+.rbc-event:nth-child(8) {
+  background-color: #fdf2fb !important;
+}
+
+.rbc-event-label {
+  color: gray !important;
+  margin-bottom: 5px;
 }

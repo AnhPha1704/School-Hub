@@ -71,13 +71,13 @@ const AttendanceChart = () => {
           />
           <Bar
             dataKey="Có mặt"
-            fill="#FAE27C"
+            fill="var(--color-girlC)"
             legendType="circle"
             radius={[10, 10, 0, 0]}
           />
           <Bar
             dataKey="Vắng"
-            fill="#C3EBFA"
+            fill="var(--color-boyC)"
             legendType="circle"
             radius={[10, 10, 0, 0]}
           />
