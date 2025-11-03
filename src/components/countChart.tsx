@@ -16,12 +16,12 @@ const data = [
   {
     name: "Nữ",
     count: 53,
-    fill: "var(--color-girlC)",
+    fill: "var(--color-yellowLight)",
   },
   {
     name: "Nam",
     count: 53,
-    fill: "var(--color-boyC)",
+    fill: "var(--color-greenLight)",
   },
 ];
 

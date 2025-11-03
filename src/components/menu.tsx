@@ -4,7 +4,7 @@ import { role } from "@/lib/data";
 
 const menuItems = [
   {
-    title: "MENU",
+    title: "Menu",
     items: [
       {
         icon: "/home.png",
@@ -33,7 +33,7 @@ const menuItems = [
       {
         icon: "/attendance.png",
         label: "Điểm danh",
-        href: "/classes",
+        href: "/attendance",
         visible: ["admin", "teacher"],
       },
       {
@@ -57,7 +57,7 @@ const menuItems = [
     ],
   },
   {
-    title: "OTHER",
+    title: "Other",
     items: [
       {
         icon: "/profile.png",
@@ -81,28 +81,40 @@ const menuItems = [
   },
 ];
 
-const Menu = () => {
+type MenuProps = {
+  closeSidebar?: () => void;
+};
+
+const Menu = ({ closeSidebar }: MenuProps) => {
   return (
-    <div className="mt-4 text-sm">
-      {menuItems.map((i) => (
-        <div className="flex flex-col gap-2" key={i.title}>
-          <span className="hidden lg:block text-gray-700 font-semibold my-4">
-            {i.title}
+    <div className="text-sm">
+      {menuItems.map((section) => (
+        <div className="flex flex-col gap-2" key={section.title}>
+          <span className="text-gray-200 font-semibold my-4">
+            {section.title}
           </span>
-          {i.items.map((item) => {
-            if (item.visible.includes(role)) {
-              return (
-                <Link
-                  href={item.href}
-                  key={item.label}
-                  className="flex items-center justify-center lg:justify-start gap-4 text-gray-600 py-2 md:px-2 rounded-md hover:bg-gray-200"
-                >
-                  <Image src={item.icon} alt="" width={20} height={20} />
-                  <span className="hidden lg:block">{item.label}</span>
-                </Link>
-              );
-            }
-          })}
+          <div className="p-2 rounded-2xl bg-[var(--color-greenLight)]">
+            {section.items.map((item) => {
+              if (item.visible.includes(role)) {
+                return (
+                  <Link
+                    href={item.href}
+                    key={item.label}
+                    onClick={closeSidebar}
+                    className="flex items-center justify-start gap-4 text-gray-200 py-2 px-2 m-1 rounded-md hover:bg-[var(--color-greenSLight)] transition-colors"
+                  >
+                    <Image
+                      src={item.icon}
+                      alt={item.label}
+                      width={20}
+                      height={20}
+                    />
+                    <span className="p-1">{item.label}</span>
+                  </Link>
+                );
+              }
+            })}
+          </div>
         </div>
       ))}
     </div>

@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Menu from "@/components/menu";
@@ -5,23 +8,39 @@ import NavBar from "@/components/navBar";
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   return (
-    <div className="h-screen flex gap-3 p-3 bg-white">
-      {/* LEFT */}
-      <div className="w-[14%] md:w-[8%] lg:w-[16%] xl:w-[14%] p-3 rounded-2xl bg-[#f7f7f7]">
-        <Link href="/" className="flex items-center lg:justify-start gap-2">
+    <div className="h-screen flex overflow-hidden">
+      {/* Overlay */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 z-40 lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        ></div>
+      )}
+
+      {/* SIDEBAR: */}
+      <div
+        className={`fixed lg:static inset-y-0 left-0 z-50 w-[240px] bg-[var(--color-green)] p-4 flex flex-col transition-transform duration-300 ease-in-out
+          ${
+            sidebarOpen ? "translate-x-0" : "-translate-x-full"
+          } lg:translate-x-0`}
+      >
+        <Link href="/" className="flex items-center p-4 gap-2 mb-4">
           <Image src="/logo256.png" alt="logo" width={64} height={64} />
-          <span className="hidden lg:block font-bold text-lg">School Hub</span>
+          <span className="font-bold text-lg text-gray-200">School Hub</span>
         </Link>
-        <Menu />
+        <div className="overflow-y-scroll hide-scrollbar">
+          <Menu closeSidebar={() => setSidebarOpen(false)} />
+        </div>
       </div>
+
       {/* RIGHT */}
-      <div className="w-[86%] md:w-[92%] lg:w-[84%] xl:w-[86%] rounded-2xl bg-[#f7f7f7] overflow-y-scroll flex flex-col">
-        <NavBar />
-        {children}
+      <div className="flex-1 bg-[var(--color-yellowBg)] overflow-y-auto hide-scrollbar flex flex-col">
+        <NavBar onMenuClick={() => setSidebarOpen(true)} />
+        <main>{children}</main>
       </div>
     </div>
   );

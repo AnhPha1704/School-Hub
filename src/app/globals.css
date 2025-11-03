@@ -7,10 +7,17 @@
 }
 
 :root {
-  --color-boyC: #badfdb;
-  --color-girlC: #ffbdbd;
-  --color-pink: #ffa4a4;
-  --color-yellow: #fcf9ea;
+  --color-green: #0a5f59;
+  --color-greenLight: #0c756f;
+  --color-greenSLight: #ceebdf;
+  --color-yellow: #fdcf6f;
+  --color-yellowLight: #fed98a;
+  --color-yellowBg: #fffcf1;
+  --color-yellowBgDark: #faf8eb;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
 /* adminCalendar */
@@ -23,17 +30,17 @@
   border-radius: 1rem !important;
 }
 .react-calendar__tile--active {
-  background-color: var(--color-boyC) !important;
+  background-color: var(--color-greenLight) !important;
 }
 .react-calendar__tile--now {
-  background-color: var(--color-girlC) !important;
+  background-color: var(--color-yellowLight) !important;
 }
 .react-calendar__navigation__label__labelText {
   font-weight: 600;
 }
 
 /* StudentCalendar */
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1280px) {
   .rbc-day-slot .rbc-event-label {
     display: none !important;
   }
@@ -55,11 +62,11 @@
 }
 .rbc-btn-group:last-child button {
   border: none !important;
-  background-color: #dcefed !important;
+  background-color: var(--color-greenLight) !important;
   margin-left: 2px !important;
 }
 .rbc-toolbar button.rbc-active {
-  background-color: #badfdb !important;
+  background-color: var(--color-yellowLight) !important;
   box-shadow: none !important;
 }
 .rbc-toolbar-label {
@@ -82,19 +89,19 @@
   padding: 0px 10px !important;
 }
 .rbc-time-header {
-  background-color: #dcefed !important;
+  background-color: var(--color-greenSLight) !important;
 }
 .rbc-time-content {
-  background-color: #eef7f6 !important;
+  background-color: var(--color-yellowBgDark) !important;
 }
 .rbc-header.rbc-today {
-  background-color: #a8d7d2 !important;
+  background-color: var(--color-greenLight) !important;
 }
 .rbc-day-slot.rbc-time-column.rbc-now.rbc-today {
-  background-color: #eef7f6 !important;
+  background-color: var(--color-yellowBgDark) !important;
 }
 .rbc-current-time-indicator {
-  background-color: #a8d7d2 !important;
+  background-color: var(--color-greenLight) !important;
 }
 .rcb-day-slot {
   font-size: 14px !important;
@@ -113,7 +120,7 @@
   background-color: #e2f8ff !important;
 }
 .rbc-event:nth-child(2) {
-  background-color: #fefce8 !important;
+  background-color: #fed98a !important;
 }
 .rbc-event:nth-child(3) {
   background-color: #f2f1ff !important;
@@ -125,7 +132,7 @@
   background-color: #e2f8ff !important;
 }
 .rbc-event:nth-child(6) {
-  background-color: #fefce8 !important;
+  background-color: #fed98a !important;
 }
 .rbc-event:nth-child(7) {
   background-color: #f2f1ff !important;
