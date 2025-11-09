@@ -25,6 +25,12 @@ const menuItems = [
         visible: ["admin", "teacher"],
       },
       {
+        icon: "/subject.png",
+        label: "Môn học",
+        href: "/subjects",
+        visible: ["admin", "teacher"],
+      },
+      {
         icon: "/class.png",
         label: "Lớp",
         href: "/classes",
@@ -35,6 +41,12 @@ const menuItems = [
         label: "Điểm danh",
         href: "/attendance",
         visible: ["admin", "teacher"],
+      },
+      {
+        icon: "/exam.png",
+        label: "Kì thi",
+        href: "/exams",
+        visible: ["admin", "teacher", "student"],
       },
       {
         icon: "/assignment.png",
@@ -50,12 +62,19 @@ const menuItems = [
       },
       {
         icon: "/calendar.png",
-        label: "Lịch",
+        label: "Sự kiện",
         href: "/events",
+        visible: ["admin", "teacher", "student"],
+      },
+      {
+        icon: "/announcement.png",
+        label: "Thông báo",
+        href: "/announcements",
         visible: ["admin", "teacher", "student"],
       },
     ],
   },
+
   {
     title: "Other",
     items: [
@@ -89,8 +108,8 @@ const Menu = ({ closeSidebar }: MenuProps) => {
   return (
     <div className="text-sm">
       {menuItems.map((section) => (
-        <div className="flex flex-col gap-2" key={section.title}>
-          <span className="text-gray-200 font-semibold my-4">
+        <div className="flex flex-col" key={section.title}>
+          <span className="text-white text-center font-semibold m-4">
             {section.title}
           </span>
           <div className="p-2 rounded-2xl bg-[var(--color-greenLight)]">
@@ -101,14 +120,16 @@ const Menu = ({ closeSidebar }: MenuProps) => {
                     href={item.href}
                     key={item.label}
                     onClick={closeSidebar}
-                    className="flex items-center justify-start gap-4 text-gray-200 py-2 px-2 m-1 rounded-md hover:bg-[var(--color-greenSLight)] transition-colors"
+                    className="flex items-center justify-start gap-4 text-gray-200 py-2 px-2 m-1 rounded-xl hover:bg-[var(--color-green)] transition-colors"
                   >
-                    <Image
-                      src={item.icon}
-                      alt={item.label}
-                      width={20}
-                      height={20}
-                    />
+                    <div className="bg-[var(--color-yellow)] p-2 rounded-xl">
+                      <Image
+                        src={item.icon}
+                        alt={item.label}
+                        width={20}
+                        height={20}
+                      />
+                    </div>
                     <span className="p-1">{item.label}</span>
                   </Link>
                 );

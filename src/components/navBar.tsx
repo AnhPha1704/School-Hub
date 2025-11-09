@@ -32,7 +32,7 @@ const NavBar = ({ onMenuClick }: NavBarProps) => {
       </button>
 
       {/* Infor */}
-      <div className="flex items-center gap-6 pr-4 ml-auto">
+      <div className="flex items-center gap-6 pr-4 ml-auto bg-[var(--color-green)] p-2 px-4 rounded-full">
         <div className="bg-white rounded-full w-7 h-7 flex items-center justify-center cursor-pointer">
           <Image src="/message.png" alt="Messages" width={20} height={20} />
         </div>
@@ -43,21 +43,23 @@ const NavBar = ({ onMenuClick }: NavBarProps) => {
             width={20}
             height={20}
           />
-          <div className="absolute -top-3 -right-3 w-5 h-5 flex items-center justify-center bg-[var(--color-pink)] text-white rounded-full text-xs">
+          <div className="absolute -top-3 -right-2.5 w-5 h-5 flex items-center justify-center bg-[var(--color-yellow)] text-gray-600 rounded-full text-xs">
             1
           </div>
         </div>
-        <div className="flex flex-col text-right">
-          <span className="text-xs leading-3 font-medium">Trần Anh Pha</span>
-          <span className="text-[10px] text-gray-500">Admin</span>
+        <div className="flex items-center px-1 py-1 rounded-full bg-[var(--color-yellow)]">
+          <div className="flex flex-col text-right px-2">
+            <span className="text-xs leading-3 font-medium">Trần Anh Pha</span>
+            <span className="text-[10px] text-gray-600">Admin</span>
+          </div>
+          <Image
+            src="/avatar.png"
+            alt="User avatar"
+            width={36}
+            height={36}
+            className="rounded-full"
+          />
         </div>
-        <Image
-          src="/avatar.png"
-          alt="User avatar"
-          width={36}
-          height={36}
-          className="rounded-full"
-        />
       </div>
     </div>
   );

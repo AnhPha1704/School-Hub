@@ -917,7 +917,6 @@ export const announcementsData = [
 
 // YOU SHOULD CHANGE THE DATES OF THE EVENTS TO THE CURRENT DATE TO SEE THE EVENTS ON THE CALENDAR
 export const calendarEvents = [
-  // Thứ Hai - 03/11/2025
   {
     title: "Math",
     allDay: false,
@@ -955,7 +954,6 @@ export const calendarEvents = [
     end: new Date(2025, 10, 3, 14, 45),
   },
 
-  // Thứ Ba - 04/11/2025
   {
     title: "English",
     allDay: false,
@@ -981,7 +979,6 @@ export const calendarEvents = [
     end: new Date(2025, 10, 4, 14, 45),
   },
 
-  // Thứ Tư - 05/11/2025
   {
     title: "Math",
     allDay: false,
@@ -1007,7 +1004,6 @@ export const calendarEvents = [
     end: new Date(2025, 10, 5, 14, 45),
   },
 
-  // Thứ Năm - 06/11/2025
   {
     title: "English",
     allDay: false,
@@ -1033,7 +1029,6 @@ export const calendarEvents = [
     end: new Date(2025, 10, 6, 14, 45),
   },
 
-  // Thứ Sáu - 07/11/2025
   {
     title: "Math",
     allDay: false,

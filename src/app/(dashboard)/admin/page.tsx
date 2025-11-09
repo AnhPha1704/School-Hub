@@ -3,6 +3,7 @@ import CountChart from "@/components/countChart";
 import AttendanceChart from "@/components/attendanceChart";
 import EventCalendar from "@/components/eventCalendar";
 import Announcement from "@/components/announcement";
+import Image from "next/image";
 
 const AdminPage = () => {
   return (
@@ -38,5 +39,4 @@ const AdminPage = () => {
     </div>
   );
 };
-
 export default AdminPage;
