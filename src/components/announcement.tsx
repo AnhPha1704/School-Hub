@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const Announcement = () => {
   return (
-    <div className="bg-white p-4 rounded-2xl">
+    <div className="bg-white p-4 rounded-2xl border-1 border-gray-200">
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-semibold">Thông báo</h1>
         <Image src="/moreDark.png" alt="" width={20} height={20} />

@@ -44,7 +44,7 @@ const menuItems = [
       },
       {
         icon: "/exam.png",
-        label: "Kì thi",
+        label: "Kỳ thi",
         href: "/exams",
         visible: ["admin", "teacher", "student"],
       },

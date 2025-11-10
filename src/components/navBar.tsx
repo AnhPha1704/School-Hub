@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import TableSearch from "./tableSearch";
 
 type NavBarProps = {
   onMenuClick: () => void;
