@@ -1,5 +1,6 @@
 import Announcement from "@/components/announcement";
 import BigCalendar from "@/components/bigCalendar";
+import FormModal from "@/components/formModal";
 import Performance from "@/components/performance";
 import Image from "next/image";
 import Link from "next/link";
@@ -23,7 +24,30 @@ const SingleTeacherPage = () => {
               />
             </div>
             <div className="w-2/3 flex flex-col justify-between gap-4">
-              <h1 className="text-xl text-white font-semibold">Nguyen Van A</h1>
+              <div className="flex items-center gap-4 ">
+                <h1 className="text-xl text-white font-semibold">
+                  Nguyen Van A
+                </h1>
+
+                <FormModal
+                  table="teacher"
+                  type="update"
+                  data={{
+                    id: 1,
+                    username: "Giao vien",
+                    email: "deanguerrero@gmail.com",
+                    password: "password",
+                    firstName: "Dean",
+                    lastName: "Guerrero",
+                    phone: "+1 234 567 89",
+                    address: "1234 Main St, Anytown, USA",
+                    position: "A+",
+                    dateOfBirth: "2000-01-01",
+                    sex: "male",
+                    img: "https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=1200",
+                  }}
+                />
+              </div>
               <p className="text-sm text-gray-200">
                 Lorem ipsum dolor sit amet consectetur adipisicing.
               </p>
@@ -50,7 +74,7 @@ const SingleTeacherPage = () => {
           {/* SMALL CARDS */}
           <div className="flex-1 flex gap-4 justify-between flex-wrap">
             {/* CARD */}
-            <div className="bg-white p-4 rounded-2xl border-1 border-gray-200 flex gap-4 w-full md:w-[48%] xl:w-[45%] 2xl:w-[48%]">
+            <div className="bg-white p-4 rounded-2xl border-1 border-gray-200 flex gap-4 w-full md:w-[48%] xl:w-[47%] 2xl:w-[48%]">
               <Image
                 src="/attendance2.png"
                 alt=""
@@ -63,7 +87,7 @@ const SingleTeacherPage = () => {
                 <span className="text-sm text-gray-600">Điểm danh</span>
               </div>
             </div>
-            <div className="bg-white p-4 rounded-2xl border-1 border-gray-200 flex gap-4 w-full md:w-[48%] xl:w-[45%] 2xl:w-[48%]">
+            <div className="bg-white p-4 rounded-2xl border-1 border-gray-200 flex gap-4 w-full md:w-[48%] xl:w-[47%] 2xl:w-[48%]">
               <Image
                 src="/branches.png"
                 alt=""
@@ -76,7 +100,7 @@ const SingleTeacherPage = () => {
                 <span className="text-sm text-gray-600">Chuyên ngành</span>
               </div>
             </div>
-            <div className="bg-white p-4 rounded-2xl border-1 border-gray-200 flex gap-4 w-full md:w-[48%] xl:w-[45%] 2xl:w-[48%]">
+            <div className="bg-white p-4 rounded-2xl border-1 border-gray-200 flex gap-4 w-full md:w-[48%] xl:w-[47%] 2xl:w-[48%]">
               <Image
                 src="/lesson.png"
                 alt=""
@@ -89,7 +113,7 @@ const SingleTeacherPage = () => {
                 <span className="text-sm text-gray-600">Bài học</span>
               </div>
             </div>
-            <div className="bg-white p-4 rounded-2xl border-1 border-gray-200 flex gap-4 w-full md:w-[48%] xl:w-[45%] 2xl:w-[48%]">
+            <div className="bg-white p-4 rounded-2xl border-1 border-gray-200 flex gap-4 w-full md:w-[48%] xl:w-[47%] 2xl:w-[48%]">
               <Image
                 src="/classes.png"
                 alt=""
@@ -105,7 +129,7 @@ const SingleTeacherPage = () => {
           </div>
         </div>
         {/* BOTTOM */}
-        <div className="mt-4 bg-white rounded-2xl border-1 border-gray-200 p-4 h-[800px]">
+        <div className="mt-4 bg-white rounded-2xl border-1 border-gray-200 p-4 h-[900px]">
           <h1>Lịch trình giáo viên</h1>
           <BigCalendar />
         </div>

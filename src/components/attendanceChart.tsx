@@ -46,7 +46,7 @@ const data = [
 
 const AttendanceChart = () => {
   return (
-    <div className="bg-white rounded-2xl p-4 h-full">
+    <div className="bg-white rounded-2xl border-1 border-gray-200 p-4 h-full">
       <div className="flex justify-between items-center">
         <h1 className="text-lg font-semibold">Điểm danh</h1>
         <Image src="/moreDark.png" alt="" width={20} height={20} />

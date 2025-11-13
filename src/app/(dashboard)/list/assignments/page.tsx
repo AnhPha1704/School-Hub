@@ -1,16 +1,17 @@
+import FormModal from "@/components/formModal";
 import PageNumber from "@/components/pageNumber";
 import Table from "@/components/table";
 import TableSearch from "@/components/tableSearch";
-import { examsData, role } from "@/lib/data";
+import { assignmentsData, role } from "@/lib/data";
 import Image from "next/image";
 import Link from "next/link";
 
-type Exam = {
+type Assignment = {
   id: number;
   subject: string;
   class: string;
   teacher: string;
-  date: string;
+  dueDate: string;
 };
 
 const columns = [
@@ -25,8 +26,8 @@ const columns = [
     className: "hidden md:table-cell",
   },
   {
-    header: "Ngày",
-    accessor: "Date",
+    header: "Ngày đến hạn",
+    accessor: "dueDate",
     className: "hidden md:table-cell",
   },
   {
@@ -35,8 +36,8 @@ const columns = [
   },
 ];
 
-const ExamListPage = () => {
-  const renderRow = (item: Exam) => (
+const AssignmentListPage = () => {
+  const renderRow = (item: Assignment) => (
     <tr
       key={item.id}
       className="border border-gray-200 even:bg-slate-50 text-sm hover:bg-teal-50"
@@ -44,24 +45,14 @@ const ExamListPage = () => {
       <td className="flex items-center gap-4 p-4">{item.subject}</td>
       <td>{item.class}</td>
       <td className="hidden md:table-cell">{item.teacher}</td>
-      <td className="hidden md:table-cell">{item.date}</td>
+      <td className="hidden md:table-cell">{item.dueDate}</td>
       <td>
         <div className="flex items-center gap-2">
-          <Link href={`/list/teachers/${item.id}`}>
-            <button
-              aria-label="edit"
-              className="w-7 h-7 flex items-center justify-center rounded-full bg-[var(--color-greenLight)]"
-            >
-              <Image src="/edit.png" alt="" width={16} height={16} />
-            </button>
-          </Link>
           {role === "admin" && (
-            <button
-              aria-label="delete"
-              className="w-7 h-7 flex items-center justify-center rounded-full bg-[var(--color-yellowLight)]"
-            >
-              <Image src="/delete.png" alt="" width={16} height={16} />
-            </button>
+            <>
+              <FormModal table="subject" type="update" data={item} />
+              <FormModal table="subject" type="delete" id={item.id} />
+            </>
           )}
         </div>
       </td>
@@ -72,7 +63,9 @@ const ExamListPage = () => {
     <div className="bg-white p-4 rounded-2xl flex-1 m-4 mt-0">
       {/* TOP */}
       <div className="flex items-center justify-between">
-        <h1 className="hidden md:block text-lg font-semibold">Tất cả kì thi</h1>
+        <h1 className="hidden md:block text-lg font-semibold">
+          Tất cả bài tập
+        </h1>
         <div className="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
           <TableSearch />
           <div className="flex items-center gap-4 self-end">
@@ -88,23 +81,16 @@ const ExamListPage = () => {
             >
               <Image src="/sort.png" alt="" width={14} height={14} />
             </button>
-            {role === "admin" && (
-              <button
-                aria-label="plus"
-                className="w-8 h-8 flex items-center justify-center rounded-full bg-[var(--color-yellow)]"
-              >
-                <Image src="/plus.png" alt="" width={14} height={14} />
-              </button>
-            )}
+            {role === "admin" && <FormModal table="student" type="create" />}
           </div>
         </div>
       </div>
       {/* LIST */}
-      <Table columns={columns} renderRow={renderRow} data={examsData} />
+      <Table columns={columns} renderRow={renderRow} data={assignmentsData} />
       {/* PAGENUMBER */}
       <PageNumber />
     </div>
   );
 };
 
-export default ExamListPage;
+export default AssignmentListPage;

@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import TableSearch from "./tableSearch";
 
 type NavBarProps = {
   onMenuClick: () => void;
@@ -13,23 +12,10 @@ const NavBar = ({ onMenuClick }: NavBarProps) => {
       {/* Sidebar button */}
       <button
         onClick={onMenuClick}
-        className="lg:hidden p-2 rounded-md text-gray-700 hover:bg-gray-100"
+        className="lg:hidden p-2 rounded-full bg-black/7 hover:bg-[var(--color-yellow)] "
         aria-label="Open menu"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          className="w-6 h-6"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M4 6h16M4 12h16M4 18h16"
-          />
-        </svg>
+        <Image src="/menu.png" alt="" width={20} height={20} />
       </button>
 
       {/* Infor */}

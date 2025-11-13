@@ -16,7 +16,7 @@ export default function RootLayout({
       {/* Overlay */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 z-40 lg:hidden"
+          className="fixed inset-0 z-50 lg:hidden bg-black/50"
           onClick={() => setSidebarOpen(false)}
         ></div>
       )}

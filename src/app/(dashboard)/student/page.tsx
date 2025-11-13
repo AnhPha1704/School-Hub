@@ -7,7 +7,7 @@ const StudentPage = () => {
     <div className="flex-1 p-4 flex gap-4 flex-col xl:flex-row">
       {/* LEFT */}
       <div className="w-full xl:w-2/3">
-        <div className="h-full bg-white p-4 rounded-2xl">
+        <div className="h-[900px] bg-white p-4 rounded-2xl">
           <h1 className="text-xl font-semibold">Thời khoá biểu (4A)</h1>
           <BigCalendar />
         </div>
