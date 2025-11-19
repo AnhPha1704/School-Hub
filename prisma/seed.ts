@@ -1,4 +1,7 @@
-import { Day, PrismaClient, UserSex } from "@prisma/client";
+// import { Day, PrismaClient, UserSex } from "@prisma/client";
+import { Day, UserSex } from "../src/generated/prisma/enums";
+import { PrismaClient } from "../src/generated/prisma/client";
+
 const prisma = new PrismaClient();
 
 async function main() {
