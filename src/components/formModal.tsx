@@ -14,7 +14,32 @@ const TeachersForm = dynamic(() => import("./forms/teachersForm"), {
   ),
 });
 const StudentsForm = dynamic(() => import("./forms/studentsForm"), {
-  loading: () => <h1>Đang tải ...</h1>,
+  loading: () => (
+    <h1 className="flex items-center justify-center text-gray-400 font-semibold">
+      Đang tải ...
+    </h1>
+  ),
+});
+const ClassForm = dynamic(() => import("./forms/classForm"), {
+  loading: () => (
+    <h1 className="flex items-center justify-center text-gray-400 font-semibold">
+      Đang tải ...
+    </h1>
+  ),
+});
+const ExamForm = dynamic(() => import("./forms/examForm"), {
+  loading: () => (
+    <h1 className="flex items-center justify-center text-gray-400 font-semibold">
+      Đang tải ...
+    </h1>
+  ),
+});
+const SubjectsForm = dynamic(() => import("./forms/subjectsForm"), {
+  loading: () => (
+    <h1 className="flex items-center justify-center text-gray-400 font-semibold">
+      Đang tải ...
+    </h1>
+  ),
 });
 
 const forms: {
@@ -22,6 +47,8 @@ const forms: {
 } = {
   teacher: (type, data) => <TeachersForm type={type} data={data} />,
   student: (type, data) => <StudentsForm type={type} data={data} />,
+  class: (type, data) => <ClassForm type={type} data={data} />,
+  subject: (type, data) => <SubjectsForm type={type} data={data} />,
 };
 
 const FormModal = ({
