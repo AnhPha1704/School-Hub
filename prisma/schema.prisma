@@ -20,17 +20,17 @@ model Admin {
 }
 
 model Student {
-  id          String       @id
-  username    String       @unique
-  name        String
-  surname     String
-  email       String?      @unique
-  phone       String?      @unique
-  address     String
-  img         String?
-  position   String
-  sex         UserSex
-  createdAt   DateTime     @default(now())
+  id        String   @id
+  username  String   @unique
+  name      String
+  surname   String
+  email     String?  @unique
+  phone     String?  @unique
+  address   String
+  img       String?
+  position  String
+  sex       UserSex
+  createdAt DateTime @default(now())
 
   classId     Int
   class       Class        @relation(fields: [classId], references: [id])
@@ -42,22 +42,22 @@ model Student {
 }
 
 model Teacher {
-  id        String    @id
-  username  String    @unique
+  id        String   @id
+  username  String   @unique
   name      String
   surname   String
-  email     String?   @unique
-  phone     String?   @unique
+  email     String?  @unique
+  phone     String?  @unique
   address   String
   img       String?
-  position String
+  position  String
   sex       UserSex
-  createdAt DateTime  @default(now())
+  createdAt DateTime @default(now())
 
-  subjects  Subject[]
-  lessons   Lesson[]
-  classes   Class[]
-  birthday  DateTime
+  subjects Subject[]
+  lessons  Lesson[]
+  classes  Class[]
+  birthday DateTime
 }
 
 model Grade {
