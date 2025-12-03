@@ -176,8 +176,11 @@ const SingleStudentPage = () => {
 				<div className="bg-white p-4 rounded-2xl border-1 border-gray-200">
 					<h1 className="text-xl font-semibold">Lối tắt</h1>
 					<div className="mt-4 flex gap-4 flex-wrap text-xs text-gray-600">
-						<Link className="p-3 rounded-md bg-[#f2f1ff]" href="/">
-							Bài học cá nhân
+						<Link
+							className="p-3 rounded-md bg-[#f2f1ff]"
+							href={`/list/lessons?classId=${2}`}
+						>
+							Tiết học của tôi
 						</Link>
 						<Link
 							className="p-3 rounded-md bg-[var(--color-yellowLight)]"
@@ -185,15 +188,21 @@ const SingleStudentPage = () => {
 						>
 							Giáo viên phụ trách
 						</Link>
-						<Link className="p-3 rounded-md bg-[#e2f8ff]" href="/">
+						<Link
+							className="p-3 rounded-md bg-[#e2f8ff]"
+							href={`/list/exams?classId=${2}`}
+						>
 							Kì thi của tôi
 						</Link>
-						<Link className="p-3 rounded-md bg-[#fdf2fb]" href="/">
-							Bài tập được giao
+						<Link
+							className="p-3 rounded-md bg-[#fdf2fb]"
+							href={`/list/assignments?classId=${2}`}
+						>
+							Bài tập của tôi
 						</Link>
 						<Link
 							className="p-3 rounded-md bg-[var(--color-greenSLight)]"
-							href="/"
+							href={`/list/results?studentId=${"student2"}`}
 						>
 							Kết quả học tập
 						</Link>
