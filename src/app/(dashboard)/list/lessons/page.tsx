@@ -9,64 +9,77 @@ import {
 	Subject,
 	Teacher,
 } from "@/generated/prisma/client";
-import { role } from "@/lib/data";
+
 import prisma from "@/lib/prisma";
 import { ITEM_PER_PAGE } from "@/lib/settings";
+import { getAuthData } from "@/lib/utils";
 import Image from "next/image";
 
 type LessonList = Lesson & { subject: Subject } & { class: Class } & {
 	teacher: Teacher;
 };
 
-const columns = [
-	{ header: "Thông tin tiết học", accessor: "name" },
-	{
-		header: "Lớp",
-		accessor: "class",
-	},
-	{
-		header: "Giáo viên",
-		accessor: "teacher",
-		className: "hidden md:table-cell",
-	},
-	{
-		header: "Hành động",
-		accessor: "actions",
-	},
-];
-
-const renderRow = (item: LessonList) => (
-	<tr
-		key={item.id}
-		className="border border-gray-200 even:bg-slate-50 text-sm hover:bg-teal-50"
-	>
-		<td className="flex items-center gap-4 p-4">{item.subject.name}</td>
-		<td>{item.class.name}</td>
-		<td className="hidden md:table-cell">
-			{item.teacher.name + " " + item.teacher.surname}
-		</td>
-		<td>
-			<div className="flex items-center gap-2">
-				{role === "admin" && (
-					<>
-						<FormModal table="lesson" type="update" data={item} />
-						<FormModal table="lesson" type="delete" id={item.id} />
-					</>
-				)}
-			</div>
-		</td>
-	</tr>
-);
-
 const LessonListPage = async ({
 	searchParams,
 }: {
 	searchParams: { [key: string]: string | undefined };
 }) => {
+	const { role, currentUserId } = await getAuthData();
 	const { page, ...queryParams } = searchParams;
 
 	const p = page ? parseInt(page) : 1;
 
+	const columns = [
+		{ header: "Thông tin tiết học", accessor: "name" },
+		{
+			header: "Lớp",
+			accessor: "class",
+		},
+		{
+			header: "Giáo viên",
+			accessor: "teacher",
+			className: "hidden md:table-cell",
+		},
+		...(role === "admin"
+			? [
+					{
+						header: "Hành động",
+						accessor: "actions",
+					},
+			  ]
+			: []),
+	];
+
+	const renderRow = (item: LessonList) => (
+		<tr
+			key={item.id}
+			className="border border-gray-200 even:bg-slate-50 text-sm hover:bg-teal-50"
+		>
+			<td className="flex items-center gap-4 p-4">{item.subject.name}</td>
+			<td>{item.class.name}</td>
+			<td className="hidden md:table-cell">
+				{item.teacher.name + " " + item.teacher.surname}
+			</td>
+			<td>
+				<div className="flex items-center gap-2">
+					{role === "admin" && (
+						<>
+							<FormModal
+								table="lesson"
+								type="update"
+								data={item}
+							/>
+							<FormModal
+								table="lesson"
+								type="delete"
+								id={item.id}
+							/>
+						</>
+					)}
+				</div>
+			</td>
+		</tr>
+	);
 	// URL PARAMS CONDITION
 	const query: Prisma.LessonWhereInput = {};
 

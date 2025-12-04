@@ -3,85 +3,98 @@ import PageNumber from "@/components/pageNumber";
 import Table from "@/components/table";
 import TableSearch from "@/components/tableSearch";
 import { Class, Event, Prisma } from "@/generated/prisma/client";
-import { role } from "@/lib/data";
 import prisma from "@/lib/prisma";
 import { ITEM_PER_PAGE } from "@/lib/settings";
+import { getAuthData } from "@/lib/utils";
 import Image from "next/image";
 
 type EventList = Event & { class: Class };
 
-const columns = [
-	{ header: "Thông tin sự kiện", accessor: "title" },
-	{
-		header: "Lớp",
-		accessor: "class",
-	},
-	{
-		header: "Ngày",
-		accessor: "date",
-		className: "hidden md:table-cell",
-	},
-	{
-		header: "Bắt đầu",
-		accessor: "startTime",
-		className: "hidden md:table-cell",
-	},
-	{
-		header: "Kết thúc",
-		accessor: "endTime",
-		className: "hidden md:table-cell",
-	},
-	{
-		header: "Hành động",
-		accessor: "actions",
-	},
-];
-
-const renderRow = (item: EventList) => (
-	<tr
-		key={item.id}
-		className="border border-gray-200 even:bg-slate-50 text-sm hover:bg-teal-50"
-	>
-		<td className="flex items-center gap-4 p-4">{item.title}</td>
-		<td>{item.class.name}</td>
-		<td className="hidden md:table-cell">
-			{new Intl.DateTimeFormat("en-US").format(item.startTime)}
-		</td>
-		<td className="hidden md:table-cell">
-			{item.startTime.toLocaleTimeString("en-US", {
-				hour: "2-digit",
-				minute: "2-digit",
-				hour12: false,
-			})}
-		</td>
-		<td className="hidden md:table-cell">
-			{item.endTime.toLocaleTimeString("en-US", {
-				hour: "2-digit",
-				minute: "2-digit",
-				hour12: false,
-			})}
-		</td>
-		<td>
-			<div className="flex items-center gap-2">
-				{role === "admin" && (
-					<>
-						<FormModal table="subject" type="update" data={item} />
-						<FormModal table="subject" type="delete" id={item.id} />
-					</>
-				)}
-			</div>
-		</td>
-	</tr>
-);
 const EventListPage = async ({
 	searchParams,
 }: {
 	searchParams: { [key: string]: string | undefined };
 }) => {
+	const { role, currentUserId } = await getAuthData();
 	const { page, ...queryParams } = searchParams;
 
 	const p = page ? parseInt(page) : 1;
 
+	const columns = [
+		{ header: "Thông tin sự kiện", accessor: "title" },
+		{
+			header: "Lớp",
+			accessor: "class",
+		},
+		{
+			header: "Ngày",
+			accessor: "date",
+			className: "hidden md:table-cell",
+		},
+		{
+			header: "Bắt đầu",
+			accessor: "startTime",
+			className: "hidden md:table-cell",
+		},
+		{
+			header: "Kết thúc",
+			accessor: "endTime",
+			className: "hidden md:table-cell",
+		},
+		...(role === "admin"
+			? [
+					{
+						header: "Hành động",
+						accessor: "actions",
+					},
+			  ]
+			: []),
+	];
+
+	const renderRow = (item: EventList) => (
+		<tr
+			key={item.id}
+			className="border border-gray-200 even:bg-slate-50 text-sm hover:bg-teal-50"
+		>
+			<td className="flex items-center gap-4 p-4">{item.title}</td>
+			<td>{item.class?.name || "----"}</td>
+			<td className="hidden md:table-cell">
+				{new Intl.DateTimeFormat("en-US").format(item.startTime)}
+			</td>
+			<td className="hidden md:table-cell">
+				{item.startTime.toLocaleTimeString("en-US", {
+					hour: "2-digit",
+					minute: "2-digit",
+					hour12: false,
+				})}
+			</td>
+			<td className="hidden md:table-cell">
+				{item.endTime.toLocaleTimeString("en-US", {
+					hour: "2-digit",
+					minute: "2-digit",
+					hour12: false,
+				})}
+			</td>
+			<td>
+				<div className="flex items-center gap-2">
+					{role === "admin" && (
+						<>
+							<FormModal
+								table="event"
+								type="update"
+								data={item}
+							/>
+							<FormModal
+								table="event"
+								type="delete"
+								id={item.id}
+							/>
+						</>
+					)}
+				</div>
+			</td>
+		</tr>
+	);
 	// URL PARAMS CONDITION
 	const query: Prisma.EventWhereInput = {};
 
@@ -98,6 +111,16 @@ const EventListPage = async ({
 			}
 		}
 	}
+
+	// ROLE CONDITIONS
+	const roleConditions = {
+		teacher: { lessons: { some: { teacherId: currentUserId! } } },
+		student: { students: { some: { id: currentUserId! } } },
+	};
+	query.OR = [
+		{ classId: null },
+		{ class: roleConditions[role as keyof typeof roleConditions] || {} },
+	];
 
 	const [data, count] = await prisma.$transaction([
 		prisma.event.findMany({
@@ -144,7 +167,7 @@ const EventListPage = async ({
 							/>
 						</button>
 						{role === "admin" && (
-							<FormModal table="student" type="create" />
+							<FormModal table="event" type="create" />
 						)}
 					</div>
 				</div>

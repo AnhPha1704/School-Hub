@@ -3,69 +3,82 @@ import PageNumber from "@/components/pageNumber";
 import Table from "@/components/table";
 import TableSearch from "@/components/tableSearch";
 import { Class, Prisma, Teacher } from "@/generated/prisma/client";
-import { role } from "@/lib/data";
 import prisma from "@/lib/prisma";
 import { ITEM_PER_PAGE } from "@/lib/settings";
+import { getAuthData } from "@/lib/utils";
 import Image from "next/image";
 
 type ClassList = Class & { supervisor: Teacher };
-
-const columns = [
-	{ header: "Thông tin lớp", accessor: "name" },
-	{
-		header: "Sĩ số",
-		accessor: "capacity",
-		className: "hidden md:table-cell",
-	},
-	{
-		header: "Lớp",
-		accessor: "grade",
-		className: "hidden md:table-cell",
-	},
-	{
-		header: "Chủ nhiệm",
-		accessor: "supervisor",
-		className: "hidden md:table-cell",
-	},
-	{
-		header: "Hành động",
-		accessor: "actions",
-	},
-];
-
-const renderRow = (item: ClassList) => (
-	<tr
-		key={item.id}
-		className="border border-gray-200 even:bg-slate-50 text-sm hover:bg-teal-50"
-	>
-		<td className="flex items-center gap-4 p-4">{item.name}</td>
-		<td className="hidden md:table-cell">{item.capacity}</td>
-		<td className="hidden md:table-cell">{item.name[0]}</td>
-		<td className="hidden md:table-cell">
-			{item.supervisor.name + " " + item.supervisor.surname}
-		</td>
-		<td>
-			<div className="flex items-center gap-2">
-				{role === "admin" && (
-					<>
-						<FormModal table="class" type="update" data={item} />
-						<FormModal table="class" type="delete" id={item.id} />
-					</>
-				)}
-			</div>
-		</td>
-	</tr>
-);
 
 const ClassListPage = async ({
 	searchParams,
 }: {
 	searchParams: { [key: string]: string | undefined };
 }) => {
+	const { role, currentUserId } = await getAuthData();
+
 	const { page, ...queryParams } = searchParams;
 
 	const p = page ? parseInt(page) : 1;
 
+	const columns = [
+		{ header: "Thông tin lớp", accessor: "name" },
+		{
+			header: "Sĩ số",
+			accessor: "capacity",
+			className: "hidden md:table-cell",
+		},
+		{
+			header: "Lớp",
+			accessor: "grade",
+			className: "hidden md:table-cell",
+		},
+		{
+			header: "Chủ nhiệm",
+			accessor: "supervisor",
+			className: "hidden md:table-cell",
+		},
+		...(role === "admin"
+			? [
+					{
+						header: "Hành động",
+						accessor: "actions",
+					},
+			  ]
+			: []),
+	];
+
+	const renderRow = (item: ClassList) => (
+		<tr
+			key={item.id}
+			className="border border-gray-200 even:bg-slate-50 text-sm hover:bg-teal-50"
+		>
+			<td className="flex items-center gap-4 p-4">{item.name}</td>
+			<td className="hidden md:table-cell">{item.capacity}</td>
+			<td className="hidden md:table-cell">{item.name[0]}</td>
+			<td className="hidden md:table-cell">
+				{item.supervisor.name + " " + item.supervisor.surname}
+			</td>
+			<td>
+				<div className="flex items-center gap-2">
+					{role === "admin" && (
+						<>
+							<FormModal
+								table="class"
+								type="update"
+								data={item}
+							/>
+							<FormModal
+								table="class"
+								type="delete"
+								id={item.id}
+							/>
+						</>
+					)}
+				</div>
+			</td>
+		</tr>
+	);
 	// URL PARAMS CONDITION
 	const query: Prisma.ClassWhereInput = {};
 
