@@ -9,6 +9,8 @@
     "start": "next start"
   },
   "dependencies": {
+    "@clerk/elements": "^0.23.87",
+    "@clerk/nextjs": "^6.35.6",
     "@hookform/resolvers": "^5.2.2",
     "@prisma/client": "^6.19.0",
     "@types/react-big-calendar": "^1.16.3",

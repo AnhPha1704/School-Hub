@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { role } from "@/lib/data";
+import { useUser } from "@clerk/nextjs";
 
 const menuItems = [
 	{
@@ -117,6 +117,9 @@ type MenuProps = {
 };
 
 const Menu = ({ closeSidebar }: MenuProps) => {
+	const { user } = useUser();
+	const role = user?.publicMetadata.role as string;
+
 	return (
 		<div className="text-sm">
 			{menuItems.map((section) => (

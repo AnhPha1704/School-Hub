@@ -1,32 +1,37 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import "./globals.css";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+	variable: "--font-geist-sans",
+	subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "School Hub",
-  description: "School Management",
+	title: "School Hub",
+	description: "School Management",
 };
 
 export default function RootLayout({
-  children,
+	children,
 }: Readonly<{
-  children: React.ReactNode;
+	children: React.ReactNode;
 }>) {
-  return (
-    <html
-      lang="vn"
-      suppressHydrationWarning
-      data-http-version="1.0.44"
-      data-http-allow="true"
-      data-tabs-api="true"
-      data-custom-referer="true"
-    >
-      <body className={`${geistSans.variable} antialiased`}>{children}</body>
-    </html>
-  );
+	return (
+		<ClerkProvider>
+			<html
+				lang="vn"
+				suppressHydrationWarning
+				data-http-version="1.0.44"
+				data-http-allow="true"
+				data-tabs-api="true"
+				data-custom-referer="true"
+			>
+				<body className={`${geistSans.variable} antialiased`}>
+					{children}
+				</body>
+			</html>
+		</ClerkProvider>
+	);
 }
