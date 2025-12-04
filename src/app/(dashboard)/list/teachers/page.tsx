@@ -1,4 +1,4 @@
-import FormModal from "@/components/formModal";
+import FormContainer from "@/components/formContainer";
 import PageNumber from "@/components/pageNumber";
 import Table from "@/components/table";
 import TableSearch from "@/components/tableSearch";
@@ -103,7 +103,11 @@ const TeacherListPage = async ({
 						</button>
 					</Link>
 					{role === "admin" && (
-						<FormModal table="teacher" type="delete" id={item.id} />
+						<FormContainer
+							table="teacher"
+							type="delete"
+							id={item.id}
+						/>
 					)}
 				</div>
 			</td>
@@ -179,7 +183,7 @@ const TeacherListPage = async ({
 							/>
 						</button>
 						{role === "admin" && (
-							<FormModal table="teacher" type="create" />
+							<FormContainer table="teacher" type="create" />
 						)}
 					</div>
 				</div>

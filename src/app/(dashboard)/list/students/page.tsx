@@ -1,13 +1,13 @@
-import FormModal from "@/components/formModal";
 import PageNumber from "@/components/pageNumber";
 import Table from "@/components/table";
 import TableSearch from "@/components/tableSearch";
 import { Class, Prisma, Student } from "@/generated/prisma/client";
 import prisma from "@/lib/prisma";
 import { ITEM_PER_PAGE } from "@/lib/settings";
-import { getAuthData } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
+import { auth } from "@clerk/nextjs/server";
+import FormContainer from "@/components/formContainer";
 
 type StudentList = Student & { class: Class };
 
@@ -16,7 +16,9 @@ const StudentListPage = async ({
 }: {
 	searchParams: { [key: string]: string | undefined };
 }) => {
-	const { role, currentUserId } = await getAuthData();
+	const { sessionClaims } = await auth();
+	const role = (sessionClaims?.metadata as { role?: string })?.role;
+
 	const { page, ...queryParams } = searchParams;
 
 	const p = page ? parseInt(page) : 1;
@@ -91,7 +93,11 @@ const StudentListPage = async ({
 						</button>
 					</Link>
 					{role === "admin" && (
-						<FormModal table="student" type="delete" id={item.id} />
+						<FormContainer
+							table="student"
+							type="delete"
+							id={item.id}
+						/>
 					)}
 				</div>
 			</td>
@@ -167,7 +173,7 @@ const StudentListPage = async ({
 							/>
 						</button>
 						{role === "admin" && (
-							<FormModal table="student" type="create" />
+							<FormContainer table="student" type="create" />
 						)}
 					</div>
 				</div>

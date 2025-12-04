@@ -1,4 +1,4 @@
-import FormModal from "@/components/formModal";
+import FormContainer from "@/components/formContainer";
 import PageNumber from "@/components/pageNumber";
 import Table from "@/components/table";
 import TableSearch from "@/components/tableSearch";
@@ -47,12 +47,12 @@ const SubjectsListPage = async ({
 				<div className="flex items-center gap-2">
 					{role === "admin" && (
 						<>
-							<FormModal
+							<FormContainer
 								table="subject"
 								type="update"
 								data={item}
 							/>
-							<FormModal
+							<FormContainer
 								table="subject"
 								type="delete"
 								id={item.id}
@@ -124,7 +124,7 @@ const SubjectsListPage = async ({
 							/>
 						</button>
 						{role === "admin" && (
-							<FormModal table="student" type="create" />
+							<FormContainer table="subject" type="create" />
 						)}
 					</div>
 				</div>

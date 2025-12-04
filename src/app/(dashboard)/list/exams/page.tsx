@@ -1,4 +1,4 @@
-import FormModal from "@/components/formModal";
+import FormContainer from "@/components/formContainer";
 import PageNumber from "@/components/pageNumber";
 import Table from "@/components/table";
 import TableSearch from "@/components/tableSearch";
@@ -77,13 +77,13 @@ const ExamListPage = async ({
 				<div className="flex items-center gap-2">
 					{(role === "admin" || role === "teacher") && (
 						<>
-							<FormModal
-								table="subject"
+							<FormContainer
+								table="exam"
 								type="update"
 								data={item}
 							/>
-							<FormModal
-								table="subject"
+							<FormContainer
+								table="exam"
 								type="delete"
 								id={item.id}
 							/>
@@ -185,7 +185,7 @@ const ExamListPage = async ({
 							/>
 						</button>
 						{(role === "admin" || role === "teacher") && (
-							<FormModal table="student" type="create" />
+							<FormContainer table="exam" type="create" />
 						)}
 					</div>
 				</div>

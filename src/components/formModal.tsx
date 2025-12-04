@@ -1,148 +1,188 @@
 "use client";
 
+import {
+	deleteClass,
+	deleteExam,
+	deleteStudent,
+	deleteSubject,
+	deleteTeacher,
+} from "@/lib/actions";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { useState } from "react";
-// import TeachersForm from "./forms/teachersForm";
-// import StudentsForm from "./forms/studentsForm";
+import { useRouter } from "next/navigation";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useActionState } from "react";
+import { toast } from "react-toastify";
+import { FormContainerProps } from "./formContainer";
 
-const TeachersForm = dynamic(() => import("./forms/teachersForm"), {
-  loading: () => (
-    <h1 className="flex items-center justify-center text-gray-400 font-semibold">
-      Đang tải ...
-    </h1>
-  ),
+const deleteActionMap = {
+	subject: deleteSubject,
+	class: deleteClass,
+	teacher: deleteTeacher,
+	student: deleteStudent,
+	exam: deleteExam,
+	// TODO: OTHER DELETE ACTIONS
+	lesson: deleteSubject,
+	assignment: deleteSubject,
+	result: deleteSubject,
+	attendance: deleteSubject,
+	event: deleteSubject,
+	announcement: deleteSubject,
+};
+
+// USE LAZY LOADING
+
+// import TeacherForm from "./forms/TeacherForm";
+// import StudentForm from "./forms/StudentForm";
+
+const TeacherForm = dynamic(() => import("./forms/teachersForm"), {
+	loading: () => <h1>Loading...</h1>,
 });
-const StudentsForm = dynamic(() => import("./forms/studentsForm"), {
-  loading: () => (
-    <h1 className="flex items-center justify-center text-gray-400 font-semibold">
-      Đang tải ...
-    </h1>
-  ),
+const StudentForm = dynamic(() => import("./forms/studentsForm"), {
+	loading: () => <h1>Loading...</h1>,
+});
+const SubjectForm = dynamic(() => import("./forms/subjectsForm"), {
+	loading: () => <h1>Loading...</h1>,
 });
 const ClassForm = dynamic(() => import("./forms/classForm"), {
-  loading: () => (
-    <h1 className="flex items-center justify-center text-gray-400 font-semibold">
-      Đang tải ...
-    </h1>
-  ),
+	loading: () => <h1>Loading...</h1>,
 });
 const ExamForm = dynamic(() => import("./forms/examForm"), {
-  loading: () => (
-    <h1 className="flex items-center justify-center text-gray-400 font-semibold">
-      Đang tải ...
-    </h1>
-  ),
+	loading: () => <h1>Loading...</h1>,
 });
-const SubjectsForm = dynamic(() => import("./forms/subjectsForm"), {
-  loading: () => (
-    <h1 className="flex items-center justify-center text-gray-400 font-semibold">
-      Đang tải ...
-    </h1>
-  ),
-});
+// TODO: OTHER FORMS
 
 const forms: {
-  [key: string]: (type: "create" | "update", data?: any) => React.JSX.Element;
+	[key: string]: (
+		setOpen: Dispatch<SetStateAction<boolean>>,
+		type: "create" | "update",
+		data?: any,
+		relatedData?: any
+	) => React.JSX.Element;
 } = {
-  teacher: (type, data) => <TeachersForm type={type} data={data} />,
-  student: (type, data) => <StudentsForm type={type} data={data} />,
-  class: (type, data) => <ClassForm type={type} data={data} />,
-  subject: (type, data) => <SubjectsForm type={type} data={data} />,
+	subject: (setOpen, type, data, relatedData) => (
+		<SubjectForm
+			type={type}
+			data={data}
+			setOpen={setOpen}
+			relatedData={relatedData}
+		/>
+	),
+	class: (setOpen, type, data, relatedData) => (
+		<ClassForm
+			type={type}
+			data={data}
+			setOpen={setOpen}
+			relatedData={relatedData}
+		/>
+	),
+	teacher: (setOpen, type, data, relatedData) => (
+		<TeacherForm
+			type={type}
+			data={data}
+			setOpen={setOpen}
+			relatedData={relatedData}
+		/>
+	),
+	student: (setOpen, type, data, relatedData) => (
+		<StudentForm
+			type={type}
+			data={data}
+			setOpen={setOpen}
+			relatedData={relatedData}
+		/>
+	),
+	exam: (setOpen, type, data, relatedData) => (
+		<ExamForm
+			type={type}
+			data={data}
+			setOpen={setOpen}
+			relatedData={relatedData}
+		/>
+		// TODO OTHER LIST ITEMS
+	),
 };
 
 const FormModal = ({
-  table,
-  type,
-  data,
-  id,
-}: {
-  table:
-    | "teacher"
-    | "student"
-    | "subject"
-    | "class"
-    | "lesson"
-    | "attendance"
-    | "exam"
-    | "assignment"
-    | "result"
-    | "event"
-    | "announcement";
-  type: "create" | "update" | "delete";
-  data?: any;
-  id?: string | number;
-}) => {
-  const size = type === "create" ? "w-8 h-8" : "w-7 h-7";
-  const bgColor =
-    type === "create"
-      ? "bg-[var(--color-yellow)]"
-      : type === "update"
-      ? "bg-[var(--color-greenLight)]"
-      : "bg-[var(--color-yellowLight)]";
+	table,
+	type,
+	data,
+	id,
+	relatedData,
+}: FormContainerProps & { relatedData?: any }) => {
+	const size = type === "create" ? "w-8 h-8" : "w-7 h-7";
+	const bgColor =
+		type === "create"
+			? "bg-[var(--color-yellow)]"
+			: type === "update"
+			? "bg-[var(--color-green)]"
+			: "bg-[var(--color-yellow)]";
 
-  const [open, setOpen] = useState(false);
+	const [open, setOpen] = useState(false);
 
-  const Form = () => {
-    return type === "delete" && id ? (
-      <form action="" className="p-4 flex flex-col gap-4">
-        <span className="text-center font-semibold text-xl">
-          Tất cả dữ liệu sẽ bị xóa. Bạn có chắc là muốn xóa {table} này?{" "}
-        </span>
-        <Image
-          src="/delete-confirm.png"
-          alt=""
-          width={512}
-          height={512}
-          className="flex h-40 w-40 m-auto mt-4"
-        />
-        <div className="flex justify-around mt-4">
-          <button
-            className="bg-red-700 text-white font-semibold py-2 px-4 rounded-md border-none w-[100px] xl:w-[150px]"
-            aria-label="Xóa"
-          >
-            Xóa
-          </button>
-          <button
-            className="bg-[var(--color-yellow)] text-black font-semibold py-2 px-4 rounded-md border-none w-[100px] xl:w-[150px]"
-            onClick={() => setOpen(false)}
-            aria-label="Hủy"
-          >
-            Hủy
-          </button>
-        </div>
-      </form>
-    ) : type === "create" || type === "update" ? (
-      forms[table](type, data)
-    ) : (
-      "Form not found!"
-    );
-  };
+	const Form = () => {
+		const [state, formAction] = useActionState(deleteActionMap[table], {
+			success: false,
+			error: false,
+		});
 
-  return (
-    <>
-      <button
-        aria-label="test"
-        className={`${size} flex items-center justify-center rounded-full ${bgColor}`}
-        onClick={() => setOpen(true)}
-      >
-        <Image src={`/${type}.png`} alt="" width={16} height={16} />
-      </button>
-      {open && (
-        <div className="w-screen h-screen absolute left-0 top-0 bg-black/50 z-50 flex items-center justify-center">
-          <div className="bg-white p-4 rounded-md relative w-[90%] md:w-[70%] lg:-[60%] xl:-[50%] 2xl:-[40%]">
-            <Form />
-            <div
-              className="absolute top-4 right-4 cursor-pointer p-2 rounded-full bg-black/7 hover:bg-[var(--color-yellow)]"
-              onClick={() => setOpen(false)}
-            >
-              <Image src="/close.png" alt="" width={20} height={20} />
-            </div>
-          </div>
-        </div>
-      )}
-    </>
-  );
+		const router = useRouter();
+
+		useEffect(() => {
+			if (state.success) {
+				toast(`${table} has been deleted!`);
+				setOpen(false);
+				router.refresh();
+			}
+		}, [state, router]);
+
+		return type === "delete" && id ? (
+			<form action={formAction} className="p-4 flex flex-col gap-4">
+				<input type="text | number" name="id" value={id} hidden />
+				<span className="text-center font-medium">
+					All data will be lost. Are you sure you want to delete this{" "}
+					{table}?
+				</span>
+				<button className="bg-red-700 text-white py-2 px-4 rounded-md border-none w-max self-center">
+					Delete
+				</button>
+			</form>
+		) : type === "create" || type === "update" ? (
+			forms[table](setOpen, type, data, relatedData)
+		) : (
+			"Form not found!"
+		);
+	};
+
+	return (
+		<>
+			<button
+				aria-label="Close"
+				className={`${size} flex items-center justify-center rounded-full ${bgColor}`}
+				onClick={() => setOpen(true)}
+			>
+				<Image src={`/${type}.png`} alt="" width={16} height={16} />
+			</button>
+			{open && (
+				<div className="w-screen h-screen absolute left-0 top-0 bg-black/60 z-50 flex items-center justify-center">
+					<div className="bg-white p-4 rounded-md relative w-[90%] md:w-[70%] lg:w-[60%] xl:w-[50%] 2xl:w-[40%]">
+						<Form />
+						<div
+							className="absolute top-4 right-4 cursor-pointer"
+							onClick={() => setOpen(false)}
+						>
+							<Image
+								src="/close.png"
+								alt=""
+								width={14}
+								height={14}
+							/>
+						</div>
+					</div>
+				</div>
+			)}
+		</>
+	);
 };
 
 export default FormModal;
